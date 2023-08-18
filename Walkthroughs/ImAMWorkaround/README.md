@@ -39,8 +39,8 @@ At this stage, the Community Images have been migrated into the organization and
 The limitation to this approach involves repeated processes each time the Community Images are updated in Docker Hub. Since the end users are not able to pull directly from the image source, Owners must track updates and repeat the steps to pull and push the images. Docker is working to automate this process through administrative enhancements to our [Docker Hub API](https://docs.docker.com/docker-hub/api/latest/); however, the process of tracking new versions of images remains manual at this time.
 
 ## Helpful Links
-[Image Access Management Documentation](https://docs.docker.com/docker-hub/image-access-management/)
-[Configuring Team-Based Permissions](https://docs.docker.com/docker-hub/manage-a-team/#configure-repository-permissions-for-a-team)
-[User Roles Overview](https://docs.docker.com/docker-hub/roles-and-permissions/)
-[Pushing Images to Docker Hub](https://docs.docker.com/docker-hub/repos/create/#push-a-docker-container-image-to-docker-hub)
+* [Image Access Management Documentation](https://docs.docker.com/docker-hub/image-access-management/)
+* [Configuring Team-Based Permissions](https://docs.docker.com/docker-hub/manage-a-team/#configure-repository-permissions-for-a-team)
+* [User Roles Overview](https://docs.docker.com/docker-hub/roles-and-permissions/)
+* [Pushing Images to Docker Hub](https://docs.docker.com/docker-hub/repos/create/#push-a-docker-container-image-to-docker-hub)
 [Docker Hub API Documentation](https://docs.docker.com/docker-hub/api/latest/)
