@@ -1,4 +1,4 @@
-# DockerSongs Walkthroughs
+# WhaleSongs Walkthroughs
 
 Please use the [table of contents](../README.md) located at the root if you wish to navigate Walkthroughs
 
