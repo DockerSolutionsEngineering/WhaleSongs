@@ -6,6 +6,7 @@
 * [Walkthroughs](./Walkthroughs/)
    - [Enable Remote Logging with Splunk](/Walkthroughs/EnableRemoteLoggingWithSplunk/)
    - [Enabling Virtulization Framework on macOS](/Walkthroughs/EnablingVirtualizationOnMacOS/)
+   - [Exposing Swarm Secrets as Env Variables](./SwarmSecretsAsEnvVariables/)
    - [Image Access Management Workaround](./Walkthroughs/ImAMWorkaround/)
    - [Monitoring Docker Desktop with Grafana](./Walkthroughs/MonitoringWithGrafana/)
    - [Understanding Docker Logs](/Walkthroughs/UnderstandingDockerLogs/)
