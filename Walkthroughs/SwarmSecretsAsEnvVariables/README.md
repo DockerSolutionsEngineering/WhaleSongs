@@ -92,3 +92,10 @@ const api_password = process.env.api_password;
 console.log(`db_password is ${db_password}`);
 console.log(`api_password is ${api_password}`);
 ```
+
+### Citations and helpful links
+
+* [Why you shouldn't use ENV variables for secret data](https://blog.diogomonica.com/2017/03/27/why-you-shouldnt-use-env-variables-for-secret-data/)
+* [Manage sensitive data with Docker secrets](https://docs.docker.com/engine/swarm/secrets/)
+* [How to use secrets in Docker Compose](https://docs.docker.com/compose/use-secrets/)
+
