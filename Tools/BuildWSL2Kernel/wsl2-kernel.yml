@@ -1,0 +1,66 @@
+---
+- name: Setup WSL2 Kernel
+  hosts: localhost
+  become: true
+  become_method: sudo
+  vars_files:
+    - wsl2-vars.yml
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - build-essential
+          - libncurses-dev
+          - bison
+          - flex
+          - libssl-dev
+          - libelf-dev
+          - dwarves
+        state: present
+        update_cache: true
+
+    - name: Clone the WSL2 Kernel Repo
+      git:
+        repo: '{{ repo_url }}'
+        dest: '{{ repo_dest }}'
+        version: '{{ kernel_version }}'
+        clone: yes
+        update: yes
+      ignore_errors: true 
+
+    - name: Display kernel version
+      debug:
+        msg: "The WSL2 Kernel repository has been cloned. If you wish to make any changes to the kernel files, please do so now. Once done, you can proceed with the next steps."
+
+    - name: Pause for user to edit kernel files
+      pause:
+        prompt: "Once you've made the desired changes to the kernel files, press Enter to continue."
+
+    - name: Build the WSL2 Kernel
+      community.general.make:
+        chdir: '{{ repo_dest }}'
+        target: all
+        params:
+          KCONFIG_CONFIG: Microsoft/config-wsl
+        jobs: "{{ ansible_processor_vcpus }}"
+      register: build_result
+      failed_when: "'Error' in build_result.stdout"
+
+    - name: Copy the Kernel Image to Windows Host Directory
+      command: cp {{ repo_dest }}/arch/x86/boot/bzImage {{ kernel_image_path }}
+
+    - name: Add the new kernel to .wslconfig
+      lineinfile:
+        path: '{{ wsl_config_path }}'
+        line: 'kernel={{ kernel_image_path | replace("/", "\\") }}'
+        insertafter: '[wsl2]'
+        create: yes
+
+    - name: Instruct user to shutdown WSL
+      debug:
+        msg: "Please manually shut down WSL by running 'wsl --shutdown' in PowerShell or Command Prompt."
+
+    - name: Instruct user to verify new kernel
+      debug:
+        msg: "After restarting WSL, verify the new kernel by running '$ uname -r' in the WSL terminal."
+
