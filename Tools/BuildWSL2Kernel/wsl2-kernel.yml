@@ -1,4 +1,13 @@
 ---
+
+#
+# This task will go through and make sure the environment is ready 
+# to build the WSL2 Kernel; this is mostly concerned with installing
+# the correct packages.
+#
+# Note that we also pull in the external variables file which is used
+# to set things like paths, account names, etc.
+#
 - name: Setup WSL2 Kernel
   hosts: localhost
   become: true
@@ -19,6 +28,18 @@
         state: present
         update_cache: true
 
+    # 
+    # This task will clone the WSL2 Repo; the entire set of variables 
+    # that define the repo location, the directory to clone to, the 
+    # version of the kernel, etc are passed in via the ansible variables
+    # file. 
+    #
+    # One important note is that we currently ignore errors on the clone;
+    # this is for the use case where a user re-runs the ansible playbook
+    # after making a small change to the source. If you do not want this 
+    # behavior you can either instruct ansible to fail out on an error or
+    # to force the clone.
+    #
     - name: Clone the WSL2 Kernel Repo
       git:
         repo: '{{ repo_url }}'
@@ -28,7 +49,15 @@
         update: yes
       ignore_errors: true 
 
-    - name: Display kernel version
+    #
+    # These two sections - the debug and pause - allow you to have control over
+    # the build process. This specifically enables the use case where a user 
+    # wants to go into the kernel source and make a change. The ansible playbook
+    # will stop and wait for input.
+    #
+    # If you do not want this behavior you can just delete these two sections.
+    #
+    - name: Inform user of next steps
       debug:
         msg: "The WSL2 Kernel repository has been cloned. If you wish to make any changes to the kernel files, please do so now. Once done, you can proceed with the next steps."
 
@@ -36,6 +65,10 @@
       pause:
         prompt: "Once you've made the desired changes to the kernel files, press Enter to continue."
 
+    #
+    # This is the actual build command, and the part that will take the longest amount of 
+    # time to complete. 
+    #
     - name: Build the WSL2 Kernel
       community.general.make:
         chdir: '{{ repo_dest }}'
@@ -46,9 +79,16 @@
       register: build_result
       failed_when: "'Error' in build_result.stdout"
 
+    #
+    # This step moves the built kernel to the correct location for use.
+    #
     - name: Copy the Kernel Image to Windows Host Directory
       command: cp {{ repo_dest }}/arch/x86/boot/bzImage {{ kernel_image_path }}
 
+    #
+    # WSL2 uses a special file called .wslconfig to provide the necessary data
+    # to the subsystem for startup. This step tells it to use our new kernel.
+    #
     - name: Add the new kernel to .wslconfig
       lineinfile:
         path: '{{ wsl_config_path }}'
@@ -56,6 +96,14 @@
         insertafter: '[wsl2]'
         create: yes
 
+    #
+    # These final steps instruct the user how to restart WSL; we cannot do this
+    # in the actual ansible playbook because we are running inside WSL currently
+    # so actually doing this would kill off our session.
+    #
+    # The final command - uname -r - provides the validation for the kernel build
+    # and install process. You should see the new kernel version.
+    #
     - name: Instruct user to shutdown WSL
       debug:
         msg: "Please manually shut down WSL by running 'wsl --shutdown' in PowerShell or Command Prompt."
@@ -63,4 +111,3 @@
     - name: Instruct user to verify new kernel
       debug:
         msg: "After restarting WSL, verify the new kernel by running '$ uname -r' in the WSL terminal."
-
