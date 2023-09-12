@@ -76,4 +76,7 @@ MODIFICATIONS: Users are free to modify the software for their own use, but redi
 Always take a backup of your data and test any software in a controlled environment before any widespread use.
 
 ## Citations and Helpful Information
-* WIP
+* [Ansible](https://www.ansible.com/)
+* [WSL2 Kernel Source](https://github.com/microsoft/WSL2-Linux-Kernel)
+* [Another Automated Build Script](https://github.com/slyfox1186/script-repo/blob/main/Bash/Installer%20Scripts/GitHub%20Projects/build-wsl2-kernel)
+* [WSL2 FAQ](https://learn.microsoft.com/en-us/windows/wsl/faq)
