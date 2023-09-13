@@ -36,7 +36,7 @@ You can scan almost any Docker image, but the scan will be even more effective i
 Scan an image with the default [grype](https://hub.docker.com/r/anchore/grype) CVE providers.
 
 ```shell
-docker run -it anchore/grype:latest "-o json <namespace>/<image>:<version>"
+docker run -it anchore/grype:latest "<namespace>/<image>:<version>" "-o json"
 ```
 
 ### Creating a Custom Grype Database for Offline and Proprietary CVE Database Use
