@@ -11,5 +11,6 @@
    - [Monitoring Docker Desktop with Grafana](./Walkthroughs/MonitoringWithGrafana/)
    - [Understanding Docker Logs](/Walkthroughs/UnderstandingDockerLogs/)
    - [Understanding Where Scout Sends Data](/Walkthroughs/ScoutDataTransmission/)
+   - [Using Buildx for SBOM and CVE detection](./Walkthroughs/CVEScansWithBuildxAndGrype/)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
