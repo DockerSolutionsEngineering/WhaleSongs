@@ -4,7 +4,7 @@
 ## Overview 
 SBOM generation, CVE detection, and Policy enforcement are core components of Supply Chain Security. This overview will show you how to incorporate Docker Desktop's [buildx](https://docs.docker.com/engine/reference/commandline/buildx/) command to leverage [BuildKit](https://docs.docker.com/build/buildkit/) SBOM generation and how to consume a generated SBOM, or image with an SBOM, with open-source toolings like [grype](https://hub.docker.com/r/anchore/grype) to detect CVEs and policy violations.
 
-![High Level Architecture](./images/SBOM_CVE_Workflow.jpg)
+![High Level Architecture](./images/InternalSecureSupplyChainWorkflow.jpg)
 
 ## Generating an SBOM
 
