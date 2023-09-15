@@ -43,14 +43,17 @@ docker run -it anchore/grype:latest "<namespace>/<image>:<version>" "-o json"
 ### Creating a Grype Database for Offline / Airgapped Use Manually
 
 * Step 1: Install [grype](https://github.com/anchore/grype).
+
 **Macintosh**
 ```shell
 $ brew install grype
-````
+```
+
 **Linux / Windows (WSL2)**
 ```shell
 $ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
  ```
+
 * Step 2: Install [grype-db](https://github.com/anchore/grype-db)
 ```shell
 $ curl -sSfL https://raw.githubusercontent.com/anchore/grype-db/main/install.sh | sh -s -- -b /usr/local/bin
