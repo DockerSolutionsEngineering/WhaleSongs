@@ -14,3 +14,4 @@
    - [Using Buildx for SBOM and CVE detection](./Walkthroughs/CVEScansWithBuildxAndGrype/)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
+   - [Grype Database Docker Image Build](./Tools/GrypeDatabaseImageBuild/README.md)
