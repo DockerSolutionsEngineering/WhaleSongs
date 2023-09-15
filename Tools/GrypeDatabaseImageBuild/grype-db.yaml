@@ -1,0 +1,82 @@
+# suppress all output
+# same as -q ; GRYPE_DB_QUIET env var
+quiet: false
+
+log:
+  # the log level; note: detailed logging suppress the ETUI
+  # same as GRYPE_DB_LOG_LEVEL env var
+  level: "error"
+
+  # location to write the log file (default is not to have a log file)
+  # same as GRYPE_DB_LOG_FILE env var
+  file: ""
+
+provider:
+  # where to read and write all provider data. The state must be oriented as described
+  # in https://github.com/anchore/vunnel/tree/main/schema/provider-workspace-state .
+  # Note: all location references under `providers` should be relative to this directory
+  # same as GRYPE_DB_PROVIDER_ROOT env var
+  root: ./data
+
+  # names of providers to filter down to while running
+  # same as -p
+  include-filter: ["alpine"]
+
+  vunnel:
+    # how to execute vunnel. Options are:
+    #  - "docker" (default): execute vunnel in a docker container
+    #  - "local": execute vunnel on the host from what is in your $PATH
+    executor: local
+
+    # the docker image to use when executing vunnel with executor=docker
+    docker-tag: latest
+    docker-image: ghcr.io/anchore/vunnel
+
+    # generate additional provider configuration files based on the "vunnel list" command
+    # same as -g ; GRYPE_DB_GENERATE_CONFIGS env var
+    generate-configs: true
+
+    # providers to exclude from the "vunnel list" command (only applies when generate-configs=true)
+    exclude-providers:
+      - centos
+      - nvd
+      - amazon
+      - chainguard
+      - debian
+      - github
+      - mariner
+      - oracle
+      - rhel
+      - sles
+      - ubuntu
+      - wolfi
+
+    # environment variables to set when executing vunnel
+    env: {}
+
+  # manually crafted provider configurations. (advanced use only)
+  configs: []
+
+pull:
+  # the number of concurrent workers to use when pulling and processing data
+  parallelism: 1
+
+build:
+  # where to place the built SQLite DB that is built from the "build" command
+  # same as --dir; GRYPE_DB_BUILD_DIR env var
+  dir: "./build"
+
+  # the DB schema version to build
+  # same as --schema-version; GRYPE_DB_BUILD_SCHEMA_VERSION env var
+  schema-version: 5
+
+  # skip validation of the provider state
+  skip-validation: false
+
+package:
+  # this is the base URL that is referenced in the listing file created during the "package" command
+  # same as GRYPE_DB_PACKAGE_PUBLISH_BASE_URL env var
+  publish-base-url: "https://localhost:8080/grype/databases"
+
+  # limit the providers to pull based off of this list. (empty list means pull all providers)
+  provider-names: []
