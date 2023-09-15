@@ -24,7 +24,7 @@ providers are able to be downloaded. In order to provide some insight into what 
 1. Update the [Grype](./grype.yaml) and [GrypeDB](./grype-db.yaml) configuration files as desired. The default is to
 only use the Alpine provider.
 2. Build the image using `docker build -t <yourtag>:<yourversion> .`
-3. Run the image normally `"docker run -it --rm <yourtag>:<yourversion> <namespace>/<image>:<version>"`
+3. Run the image normally `docker run -it --rm <yourtag>:<yourversion> <namespace>/<image>:<version>`
 
 ## Example Output
 

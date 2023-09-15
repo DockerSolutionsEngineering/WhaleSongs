@@ -45,15 +45,15 @@ docker run -it anchore/grype:latest "<namespace>/<image>:<version>" "-o json"
 * Step 1: Install [grype](https://github.com/anchore/grype).
 **Macintosh**
 ```shell
-$ brew install grype`
+$ brew install grype
 ````
 **Linux / Windows (WSL2)**
 ```shell
-$ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin`
+$ curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
  ```
 * Step 2: Install [grype-db](https://github.com/anchore/grype-db)
 ```shell
-$ curl -sSfL https://raw.githubusercontent.com/anchore/grype-db/main/install.sh | sh -s -- -b /usr/local/bin`
+$ curl -sSfL https://raw.githubusercontent.com/anchore/grype-db/main/install.sh | sh -s -- -b /usr/local/bin
  ```
 * Step 3: Determine which providers you want to use; Grype leverages Vunnel to build a provider list; the following
 command lists all available providers.
