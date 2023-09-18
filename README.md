@@ -14,4 +14,5 @@
    - [Using Buildx for SBOM and CVE detection](./Walkthroughs/CVEScansWithBuildxAndGrype/)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
+   - [Build WSL2 Kernel with Ansible](Tools/BuildWSL2Kernel)
    - [Grype Database Docker Image Build](./Tools/GrypeDatabaseImageBuild/README.md)

@@ -12,7 +12,13 @@ Please see the [Understanding Docker Logs](../Walkthroughs/UnderstandingDockerLo
 ## Important Notes
 Be aware that Docker rotates the logfiles *frequently*, so any usage of tooling that relies on keeping a file descriptor (fd) open, such as `tail -f` will stop working when the logfile is rotated. 
 
-## Additional Information
+## Python Example
+The Python directory contains three python files:
+- [`parse_log.py`](./python/parse_log.py) will parse the Docker log file and produce human or syslog readable output.
+- [`sample_data.py`](./python/sample_data.py) provides sample data to test the python program with.
+- [`test_parse_log.py`](./python/test_parse_log.py) runs a test on the program to ensure it is parsing the data correctly.
+
+## Windows Examples
 
 ### Sending Data to the Windows Event Log
 Windows administrators are invariably going to ask for important logs to be imported into the Windows Event Viewer in order to better integrate with their tooling and processes. This requires reading the existing text files, parsing them, and then loading them into the Windows Event system. 
@@ -41,39 +47,9 @@ This PowerShell script is tailored for administrators aiming to integrate Docker
 4. Event Log Writing:
 * A formatted log message is constructed, combining the extracted timestamp, source, and message.
 * This message is then written to the Windows Event Log using `Write-EventLog`, with the specified log name, source, and determined entry type.
-
-
-```powershell
-# Parameters
-$logFile = "C:\path\to\your\docker\log.txt"
-$logName = "Application"
-$source = "DockerLogParser"
-
-# Ensure the source exists
-if (![System.Diagnostics.EventLog]::SourceExists($source)) {
-    [System.Diagnostics.EventLog]::CreateEventSource($source, $logName)
-}
-
-# Read, parse and write log entries
-Get-Content -Path $logFile | ForEach-Object {
-    if ($_ -match '^\[(?<timestamp>.*?)\]\[(?<source>.*?)\]\[(?<sev_short>.)\] time="(?<time_inner>.*?)" level=(?<severity>.*?) msg="(?<message>.*)"') {
-        $severity = $matches['severity']
-        $parsedTime = $matches['timestamp']
-        
-        # Determine EventLog EntryType
-        $entryType = switch ($severity) {
-            "info" { "Information" }
-            "warning" { "Warning" }
-            "error" { "Error" }
-            default { "Information" }
-        }
-
-        $logMessage = "Timestamp: $parsedTime | Source: $($matches['source']) | Message: $($matches['message'])"
-
-        Write-EventLog -LogName $logName -Source $source -EntryType $entryType -EventId 1 -Message $logMessage
-    }
-}
-```
+* 
+#### Source Code Location
+The code can be found in the windows directory as [LogsToEventlog.ps1](./windows/LogsToEventlog.ps1).
 
 #### C#
 
@@ -99,93 +75,9 @@ The DockerLogToEventLog program is a C# utility designed to facilitate the integ
 * For each successfully parsed log line, a formatted message is constructed, combining the extracted timestamp, source, and message.
 * This message is then written to the Windows Event Log using `EventLog.WriteEntry`, with the specified source identifier and determined entry type.
 
+#### Source Code Location
+The code can be found in the windows directory as [LogsToEventlog.cs](./windows/LogsToEventlog.cs).
 
-```C#
-using System;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-
-namespace DockerLogToEventLog
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            if (args.Length != 3)
-            {
-                Console.WriteLine("Usage: DockerLogToEventLog.exe <path_to_log_file> <log_name> <source_name>");
-                return;
-            }
-
-            string logFilePath = args[0];
-            string logName = args[1];
-            string sourceName = args[2];
-
-            if (!EventLog.SourceExists(sourceName))
-            {
-                EventLog.CreateEventSource(sourceName, logName);
-            }
-
-            string[] logLines;
-            try
-            {
-                using (FileStream fileStream = new FileStream(logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (StreamReader reader = new StreamReader(fileStream))
-                {
-                    List<string> lines = new List<string>();
-                    while (!reader.EndOfStream)
-                    {
-                        lines.Add(reader.ReadLine());
-                    }
-                    logLines = lines.ToArray();
-                }
-            }
-            catch (IOException e)
-            {
-                Console.WriteLine("An IO exception occurred: " + e.Message);
-                return;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("An exception occurred: " + e.Message);
-                return;
-            }
-
-
-            string pattern = @"^\[(?<timestamp>.*?)\]\[(?<source>.*?)\]\[(?<sev_short>.)\] time="".*?"" level=(?<severity>.*?) msg=""(?<message>.*)""";
-
-            foreach (var line in logLines)
-            {
-                var match = Regex.Match(line, pattern);
-                if (match.Success)
-                {
-                    string timestamp = match.Groups["timestamp"].Value;
-                    string source = match.Groups["source"].Value;
-                    string severity = match.Groups["severity"].Value;
-                    string message = match.Groups["message"].Value;
-
-                    EventLogEntryType entryType = EventLogEntryType.Information;
-
-                    switch (severity)
-                    {
-                        case "warning":
-                            entryType = EventLogEntryType.Warning;
-                            break;
-                        case "error":
-                            entryType = EventLogEntryType.Error;
-                            break;
-                    }
-
-                    string finalMessage = $"Timestamp: {timestamp} | Source: {source} | Message: {message}";
-
-                    EventLog.WriteEntry(sourceName, finalMessage, entryType);
-                }
-            }
-        }
-    }
-}
-```
 
 #### Caveats and Warnings
 * The Windows Event Log is difficult to manipulate in terms of the timestamp that is logged; because of this both of these utilities put the actual timestamp in the body of the message. Specifically, the `System.Diagnostics.EventLogEntry` class does not have a public constructor or a writable `TimeGenerated` property, which means you can't instantiate an object of this class directly nor set its timestamp.
