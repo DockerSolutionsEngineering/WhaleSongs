@@ -61,6 +61,10 @@ This is the [hosts file](./hosts.ini) used by Ansible; since this process is des
 
 9. Once you restart your linux distribution you will be running the newly compiled kernel.
 
+## Example Run
+![Example Run](./wsl2build.svg)
+
+
 ## SOFTWARE DISCLAIMER
 
 This software is provided as a "Proof of Concept" (PoC) and is not intended for production use.
