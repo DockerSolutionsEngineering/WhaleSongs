@@ -1,0 +1,22 @@
+# wsl2-vars.yml
+
+# URL of the WSL2 Kernel repository
+repo_url: 'https://github.com/microsoft/WSL2-Linux-Kernel'
+# Name of the Windows user
+windows_user: 'ObfuscatedWindowsUser'
+# Name of the WSL2 user
+wsl2_user: 'ObfuscatedWSL2User'
+# Destination path for the cloned repository in WSL2, using the obfuscated WSL2 user name
+repo_dest: '/home/{{ wsl2_user }}/repos'
+# Prefix for the kernel version
+kernel_header: 'linux-msft-wsl-'
+# Specific kernel version to be used
+kernel_majmin: '5.15.90.1'
+# Complete kernel version string
+kernel_version: '{{ kernel_header }}{{ kernel_majmin }}'
+# Path to the obfuscated Windows user's directory from WSL2
+windows_user_path: '/mnt/c/Users/{{ windows_user }}'
+# Path where the kernel image will be stored in the obfuscated Windows user's directory
+kernel_image_path: '{{ windows_user_path }}/{{ kernel_majmin }}-wsl'
+# Path to the .wslconfig file in the obfuscated Windows user's directory
+wsl_config_path: '{{ windows_user_path }}/.wslconfig'
