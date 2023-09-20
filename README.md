@@ -12,6 +12,7 @@
    - [Understanding Docker Logs](/Walkthroughs/UnderstandingDockerLogs/)
    - [Understanding Where Scout Sends Data](/Walkthroughs/ScoutDataTransmission/)
    - [Using Buildx for SBOM and CVE detection](./Walkthroughs/CVEScansWithBuildxAndGrype/)
+   - [Recovering "deleted" Files from Image Layers](./Walkthroughs/ImageWhiteout/README.md)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
    - [Build WSL2 Kernel with Ansible](Tools/BuildWSL2Kernel)
