@@ -6,6 +6,12 @@ SBOM generation, CVE detection, and Policy enforcement are core components of Su
 
 ![High Level Architecture](./images/InternalSecureSupplyChainWorkflow.jpg)
 
+## Creating a BuildKit Container
+
+```shell
+docker buildx create --use --name=buildkit-container --driver=docker-container
+```
+
 ## Generating an SBOM
 
 ### Generating an SBOM at Container Build Time
@@ -13,20 +19,20 @@ SBOM generation, CVE detection, and Policy enforcement are core components of Su
 The following command will build the Dockerfile in the current directory and create an out directory with a [SPDX](https://spdx.dev/resources/use/) based JSON file representing your SBOM. It will also generate an attestation that proves the provenance of the image.
 
 ```shell
-docker buildx build --sbom=true --output type=local,dest=out .
+docker buildx build --builder=buildkit-container --sbom=true --output type=local,dest=out .
 ```
 
 Once you've verified your SBOM output locally, you can build, attest, generate an SBOM, and push it to your registry with the following command.
 
 ```shell
-docker buildx build --tag <namespace>/<image>:<version> --attest type=sbom --push .
+docker buildx build --builder=buildkit-container --tag <namespace>/<image>:<version> --attest type=sbom --push .
 ```
 
 ### Generating an SBOM from an Image
 If you need to generate an SBOM from an image that has already been built, you can do so with the following command.
 
 ```shell
-docker buildx imagetools inspect <namespace>/<image>:<version> --format "{{ json .SBOM.SPDX }}"
+docker buildx imagetools inspect <namespace>/<image>:<version> --builder=buildkit-container --format "{{ json .SBOM.SPDX }}"
 ```
 
 ## Scanning Images for CVEs
