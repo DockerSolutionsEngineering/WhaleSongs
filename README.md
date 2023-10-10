@@ -13,6 +13,8 @@
    - [Understanding Where Scout Sends Data](/Walkthroughs/ScoutDataTransmission/)
    - [Using Buildx for SBOM and CVE detection](./Walkthroughs/CVEScansWithBuildxAndGrype/)
    - [Recovering "deleted" Files from Image Layers](./Walkthroughs/ImageWhiteout/README.md)
+   - [Understanding the USER Command](./Walkthroughs/UserCommand/README.md)
+   - [RUN, CMD, and ENTRYPOINT - What to use Where](./Walkthroughs/RunCmdEntrypoint/README.md)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
    - [Build WSL2 Kernel with Ansible](Tools/BuildWSL2Kernel)
