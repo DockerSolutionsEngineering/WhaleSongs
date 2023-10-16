@@ -2,7 +2,14 @@
 ### This walkthrough examines the USER command, provides best practices, and demonstrates how it works on a host
 
 ## Overview 
-The `USER` and `GROUP` commands in Docker are used to execute commands inside a container as a non-root user. If no `USER` or `GROUP` is provided, the container runs as root. This document provides some best practices and things to avoid, and ends with a guided demo for the user to walk through the use of USER/GROUP to better explain the rationale behind the tips given.
+The [`USER`](https://docs.docker.com/engine/reference/builder/#user) and 
+[`GROUP`](https://docs.docker.com/engine/reference/builder/#group) commands in Docker are used to execute commands 
+inside a container as a non-root user. If no `USER` or `GROUP` is provided, the container runs as root. This document 
+provides some best practices and things to avoid, and ends with a guided demo for the user to walk through the use of 
+USER/GROUP to better explain the rationale behind the tips given.
+
+This document is written for Linux containers, and assumes some understanding of the 
+[UID/GID](https://geek-university.com/uid-user-identifier-gid-group-identifier/) system in linux.
 
 ### Best Practices
 
@@ -217,3 +224,6 @@ graph TD
 * [Hardened Docker Desktop](https://docs.docker.com/desktop/hardened-desktop/) 
 * [Enhanced Container Isolation](https://docs.docker.com/desktop/hardened-desktop/enhanced-container-isolation/) 
 * [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)
+* [UID and GID Explained](https://geek-university.com/uid-user-identifier-gid-group-identifier/)
+* [`USER`](https://docs.docker.com/engine/reference/builder/#user) instruction
+*  [`GROUP`](https://docs.docker.com/engine/reference/builder/#group)  instruction
