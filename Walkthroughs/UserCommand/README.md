@@ -212,3 +212,8 @@ graph TD
     class E,F,G,H container;
 
 ```
+
+## Citations and Helpful Information
+* [Hardened Docker Desktop](https://docs.docker.com/desktop/hardened-desktop/) 
+* [Enhanced Container Isolation](https://docs.docker.com/desktop/hardened-desktop/enhanced-container-isolation/) 
+* [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/)

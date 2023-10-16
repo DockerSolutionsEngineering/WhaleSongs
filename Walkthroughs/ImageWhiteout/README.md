@@ -84,8 +84,10 @@ View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux
 ```
 
 #### Inspect the Image
-Let's use the `docker inspect` command to view the contents of our image; note that I am using a `jq` filter to cut 
-down the JSON being returned to just the part we are concerned with. This shows us the actual files on the disk of the 
+Let's use the [`docker inspect`](https://docs.docker.com/engine/reference/commandline/inspect/)
+command to view the contents of our image; note that I am using a 
+[`jq`](https://jqlang.github.io/jq/) filter to cut down the JSON being returned to just the part we 
+are concerned with. This shows us the actual files on the disk of the 
 system running the docker daaemon.
 
 ```shell
@@ -102,8 +104,8 @@ $ docker inspect password-test| jq '.[].GraphDriver'
 ```
 
 ### Using `dive`
-There is an OSS tool named `dive` that can be used to interactively drill into an image to see the layers, what file 
-changes they have, etc.
+There is an OSS tool named [`dive`](https://github.com/wagoodman/dive) that can be used to interactively drill into an 
+image to see the layers, what file changes they have, etc.
 
 ```shell
 $ dive custom-node
@@ -120,7 +122,8 @@ are interested in - the COPY instruction - and can look under the "Layer Details
 ![Dive01](./images/dive01.png)
 
 #### Backing up the Image
-Now we are going to make use of the `docker save` command to export our image to a tar file
+Now we are going to make use of the [`docker save`](https://docs.docker.com/engine/reference/commandline/save/)
+command to export our image to a tar file
 ```Shell
 $ docker save password-test -o password-test.tgz
 ```
@@ -209,7 +212,3 @@ For more information on this - and how directories are handled - read the kernel
 - **LXC (Linux Containers, uses OverlayFS among others)**
   - [LXC Website](https://linuxcontainers.org/)
   - [LXC GitHub](https://github.com/lxc/lxc)
-
-
-
-

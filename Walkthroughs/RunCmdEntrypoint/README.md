@@ -2,19 +2,22 @@
 ### This walkthrough is intended to provide some guidance around determining the best command and the best format
 
 ## Overview 
-Docker has three commands that can be used to run executables, and it sometimes is difficult to choose which one to use for a given situation. Additionally, there are two separate formats that can be used to pass commands and arguments into these commands.
+Docker has three commands that can be used to run executables, and it sometimes is difficult to choose which one to use
+for a given situation. Additionally, there are two separate formats that can be used to pass commands and arguments 
+into these commands.
 
 ### Summary
 
-The following tables and diagrams summarize the key differences and similarities between the commands and format, and provides a decision flow to help you decide.
+The following tables and diagrams summarize the key differences and similarities between the commands and format, 
+and provides a decision flow to help you decide.
 
 #### Command Description and Use Cases
 
-| Command | Description | Use Case |
-| --- | --- | --- |
-| CMD | Defines the default executable of a Docker image. Can be overridden by `docker run` arguments. | General-purpose images where users can pass different executables and arguments on the command-line. |
-| ENTRYPOINT | Defines the default executable. Cannot be overridden by `docker run` arguments. | Images built for a specific purpose where overriding the default executable is not desired. |
-| RUN | Executes commands to build layers. | Building an Image |
+| Command                                                                      | Description | Use Case |
+|------------------------------------------------------------------------------| --- | --- |
+| [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd)               | Defines the default executable of a Docker image. Can be overridden by `docker run` arguments. | General-purpose images where users can pass different executables and arguments on the command-line. |
+| [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint) | Defines the default executable. Cannot be overridden by `docker run` arguments. | Images built for a specific purpose where overriding the default executable is not desired. |
+| [`RUN`](https://docs.docker.com/engine/reference/builder/#run)               | Executes commands to build layers. | Building an Image |
 
 #### Format Description and Examples
 
@@ -73,7 +76,9 @@ graph TD
 
 ### Example
 
-The following will walk you through the high level differences between `CMD` and `ENTRYPOINT`; in these examples the `RUN` command is not included given that the only decision to make there is easily handled by a review of the two different formats.
+The following will walk you through the high level differences between `CMD` and `ENTRYPOINT`; in these examples the 
+`RUN` command is not included given that the only decision to make there is easily handled by a review of the two 
+different formats.
 
 ### Test Dockerfile
 
@@ -149,7 +154,8 @@ $ docker run --rm ab https://jayschmidt.us
 docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec: "https://jayschmidt.us": stat https://jayschmidt.us: no such file or directory: unknown.
 ```
 
-The issue here is that the string supplied on the command line - `https://jayschmidt.us` - is overriding the `CMD` instruction, and that is not a valid command so an error is thrown. So we need to specify the command to run:
+The issue here is that the string supplied on the command line - `https://jayschmidt.us` - is overriding the `CMD` 
+instruction, and that is not a valid command so an error is thrown. So we need to specify the command to run:
 
 ```shell
 $ docker run --rm  ab ab https://jayschmidt.us/
@@ -191,9 +197,11 @@ Total:        132  132   0.0    132     132
 
 ### Run with `ENTRYPOINT`
 
-In this run, we remove the `CMD ab` instruction from the Dockerfile and replace it with `ENTRYPOINT ["ab"]`, and then rebuild the image.
+In this run, we remove the `CMD ab` instruction from the Dockerfile and replace it with `ENTRYPOINT ["ab"]`, and then 
+rebuild the image.
 
-This is similar to but different than the `CMD` command - when you use `ENTRYPOINT` you cannot override the command. Instead, any arguments passed to the `docker run` command are treated as arguments to the `ENTRYPOINT`.
+This is similar to but different than the `CMD` command - when you use `ENTRYPOINT` you cannot override the command. 
+Instead, any arguments passed to the `docker run` command are treated as arguments to the `ENTRYPOINT`.
 
 ```shell
 $ docker run --rm  ab "https://jayschmidt.us/"
@@ -235,7 +243,9 @@ Total:        122  122   0.0    122     122
 
 ### What About Syntax?
 
-In the example above, we use the syntax `ENTRYPOINT ["ab"]` where we wrap the command we want to run in square brackets and quotes. However, it is possible to specify `ENTRYPOINT ab` (without quotes or brackets). Let's see what happens when we try that.
+In the example above, we use the syntax `ENTRYPOINT ["ab"]` where we wrap the command we want to run in square brackets 
+and quotes. However, it is possible to specify `ENTRYPOINT ab` (without quotes or brackets). Let's see what happens 
+when we try that.
 
 ```shell
 $ docker run --rm  ab "https://jayschmidt.us/"
@@ -251,7 +261,8 @@ Options are:
 <-- SNIP -->
 ```
 
-Your first thought will likely be to re-run the `docker run` command as we did for `CMD ab` above, that is giving both the executable and the argument:
+Your first thought will likely be to re-run the `docker run` command as we did for `CMD ab` above, that is giving both 
+the executable and the argument:
 
 ```shell
 $ docker run --rm ab ab "https://jayschmidt.us/"
@@ -267,4 +278,11 @@ Options are:
 <-- SNIP -->
 ```
 
-This is because the `ENTRYPOINT` cannot be overridden in the same way that `CMD` is; the takeaway is to always use `ENTRYPOINT` when you want to force the usage of a given executable in the container when it is run.
+This is because the `ENTRYPOINT` cannot be overridden in the same way that `CMD` is; the takeaway is to always use 
+`ENTRYPOINT` when you want to force the usage of a given executable in the container when it is run.
+
+
+## Citations and Helpful Information
+* [`[CMD`](https://docs.docker.com/engine/reference/builder/#cmd)               
+* [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint)
+* [`RUN`](https://docs.docker.com/engine/reference/builder/#run)   
