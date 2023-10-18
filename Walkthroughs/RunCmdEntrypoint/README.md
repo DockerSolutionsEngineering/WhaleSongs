@@ -283,6 +283,6 @@ This is because the `ENTRYPOINT` cannot be overridden in the same way that `CMD`
 
 
 ## Citations and Helpful Information
-* [`[CMD`](https://docs.docker.com/engine/reference/builder/#cmd)               
+* [`CMD`](https://docs.docker.com/engine/reference/builder/#cmd)               
 * [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint)
 * [`RUN`](https://docs.docker.com/engine/reference/builder/#run)   
