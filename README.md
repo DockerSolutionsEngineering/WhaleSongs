@@ -16,6 +16,7 @@
    - [Understanding the USER Command](./Walkthroughs/UserCommand/README.md)
    - [RUN, CMD, and ENTRYPOINT - What to use Where](./Walkthroughs/RunCmdEntrypoint/README.md)
    - [Which Docker am I Using?](./Walkthroughs/WhatDockerAmIUsing/README.md) 
+   - [Remote Docker Container Debugging](./Walkthroughs/DockerDebugRemote/README.md)
 * [Tools](./Tools/)
    - [Docker Engine Logs ETL](Tools/DockerEngineLogETL)
    - [Build WSL2 Kernel with Ansible](Tools/BuildWSL2Kernel)
