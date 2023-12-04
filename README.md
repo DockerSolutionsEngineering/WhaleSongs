@@ -8,6 +8,7 @@
    - [Enabling Virtulization Framework on macOS](/Walkthroughs/EnablingVirtualizationOnMacOS/)
    - [Exposing Swarm Secrets as Env Variables](/Walkthroughs/SwarmSecretsAsEnvVariables/)
    - [Image Access Management Workaround](./Walkthroughs/ImAMWorkaround/)
+   - [Import and Install Extensions On-Prem](./Walkthroughs/ExtensionsOnPrem/)
    - [Monitoring Docker Desktop with Grafana](./Walkthroughs/MonitoringWithGrafana/)
    - [Understanding Docker Logs](/Walkthroughs/UnderstandingDockerLogs/)
    - [Understanding Where Scout Sends Data](/Walkthroughs/ScoutDataTransmission/)
